@@ -1,5 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 
+/**
+ * HeroCanvas — Full-screen subtle animated mesh gradient background.
+ * Renders soft blobs of warm grays/creams that drift slowly,
+ * creating a living, breathing ambient backdrop that never
+ * competes with the typography above it.
+ */
 export const HeroCanvas: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -9,177 +15,74 @@ export const HeroCanvas: React.FC = () => {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    let animationFrameId: number;
-    let width = (canvas.width = canvas.parentElement?.clientWidth || window.innerWidth);
-    let height = (canvas.height = canvas.parentElement?.clientHeight || window.innerHeight);
+    let raf: number;
+    let W = (canvas.width = canvas.offsetWidth || window.innerWidth);
+    let H = (canvas.height = canvas.offsetHeight || window.innerHeight);
 
-    const handleResize = () => {
+    const resize = () => {
       if (!canvas) return;
-      width = canvas.width = canvas.parentElement?.clientWidth || window.innerWidth;
-      height = canvas.height = canvas.parentElement?.clientHeight || window.innerHeight;
+      W = canvas.width = canvas.offsetWidth || window.innerWidth;
+      H = canvas.height = canvas.offsetHeight || window.innerHeight;
     };
+    window.addEventListener('resize', resize);
 
-    window.addEventListener('resize', handleResize);
+    // Soft blob orbs — warm off-white / light stone tones
+    const orbs = [
+      { x: 0.25, y: 0.30, r: 0.50, color: [218, 213, 205], speed: 0.00018, phase: 0.0 },
+      { x: 0.75, y: 0.60, r: 0.55, color: [210, 206, 198], speed: 0.00014, phase: 1.2 },
+      { x: 0.50, y: 0.85, r: 0.45, color: [225, 221, 215], speed: 0.00022, phase: 2.5 },
+      { x: 0.10, y: 0.70, r: 0.40, color: [230, 226, 220], speed: 0.00016, phase: 3.8 },
+      { x: 0.85, y: 0.15, r: 0.42, color: [222, 218, 210], speed: 0.00020, phase: 0.7 },
+    ];
 
-    // Mouse tracking with smooth damping
-    let targetMouseX = width * 0.5;
-    let targetMouseY = height * 0.5;
-    let mouseX = width * 0.5;
-    let mouseY = height * 0.5;
+    let t = 0;
 
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!canvas) return;
-      const rect = canvas.getBoundingClientRect();
-      targetMouseX = e.clientX - rect.left;
-      targetMouseY = e.clientY - rect.top;
-    };
+    const draw = () => {
+      t++;
 
-    const handleMouseLeave = () => {
-      targetMouseX = width * 0.5;
-      targetMouseY = height * 0.5;
-    };
+      // Base warm off-white fill
+      ctx.fillStyle = '#F5F3EF';
+      ctx.fillRect(0, 0, W, H);
 
-    const parent = canvas.parentElement;
-    parent?.addEventListener('mousemove', handleMouseMove);
-    parent?.addEventListener('mouseleave', handleMouseLeave);
+      // Draw each drifting orb as a radial gradient
+      for (const orb of orbs) {
+        const angle = t * orb.speed * Math.PI * 2;
+        const cx = (orb.x + Math.sin(angle + orb.phase) * 0.12) * W;
+        const cy = (orb.y + Math.cos(angle + orb.phase * 0.7) * 0.10) * H;
+        const radius = orb.r * Math.max(W, H);
 
-    // 3D Interactive Wave Topology Grid Parameters
-    const cols = 45;
-    const rows = 28;
-    let time = 0;
+        const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, radius);
+        const [r, gr, b] = orb.color;
+        g.addColorStop(0,   `rgba(${r},${gr},${b},0.55)`);
+        g.addColorStop(0.5, `rgba(${r},${gr},${b},0.20)`);
+        g.addColorStop(1,   `rgba(${r},${gr},${b},0.00)`);
 
-    const render = () => {
-      time += 0.018;
-
-      // Smooth mouse follow
-      mouseX += (targetMouseX - mouseX) * 0.06;
-      mouseY += (targetMouseY - mouseY) * 0.06;
-
-      ctx.clearRect(0, 0, width, height);
-
-      // 1. Draw subtle ambient glowing gradient following cursor
-      const radialGradient = ctx.createRadialGradient(
-        mouseX,
-        mouseY,
-        0,
-        mouseX,
-        mouseY,
-        Math.min(width, height) * 0.65
-      );
-      radialGradient.addColorStop(0, 'rgba(230, 226, 218, 0.5)');
-      radialGradient.addColorStop(0.5, 'rgba(242, 239, 233, 0.25)');
-      radialGradient.addColorStop(1, 'rgba(250, 250, 250, 0)');
-      ctx.fillStyle = radialGradient;
-      ctx.fillRect(0, 0, width, height);
-
-      // 2. Compute 3D Perspective Wave Grid Points
-      const points: Array<Array<{ x: number; y: number; z: number; depthAlpha: number }>> = [];
-      const horizonY = height * 0.22;
-      const fov = 340;
-
-      for (let r = 0; r < rows; r++) {
-        const rowPoints: Array<{ x: number; y: number; z: number; depthAlpha: number }> = [];
-        const zNorm = r / rows; // 0 (near horizon) to 1 (close to bottom)
-        const z3D = (1 - zNorm) * 550 + 80;
-
-        for (let c = 0; c < cols; c++) {
-          const xNorm = (c - cols / 2) / (cols / 2); // -1 to 1
-          const x3D = xNorm * (width * 0.75);
-
-          // Wave height formula with multiple harmonics and mouse interaction
-          const distFromMouse = Math.hypot(
-            (c / cols) * width - mouseX,
-            (r / rows) * height - mouseY
-          );
-          const mouseWave = Math.max(0, 1 - distFromMouse / 300) * 45 * Math.sin(time * 3 - distFromMouse * 0.02);
-
-          const wave =
-            Math.sin(c * 0.28 + time * 1.4) * 18 +
-            Math.cos(r * 0.35 - time * 1.1) * 22 +
-            Math.sin((c + r) * 0.18 + time) * 14 +
-            mouseWave;
-
-          const y3D = wave;
-
-          // Project 3D -> 2D
-          const scale = fov / (fov + z3D);
-          const projX = width * 0.5 + x3D * scale;
-          const projY = horizonY + (height * 0.75 - horizonY) * zNorm + y3D * scale * 1.8;
-
-          const depthAlpha = Math.min(1, Math.max(0.04, zNorm * 0.85));
-
-          rowPoints.push({ x: projX, y: projY, z: z3D, depthAlpha });
-        }
-        points.push(rowPoints);
+        ctx.fillStyle = g;
+        ctx.fillRect(0, 0, W, H);
       }
 
-      // 3. Draw Grid Lines (Horizontal Waves)
-      for (let r = 0; r < rows; r++) {
+      // Very subtle fine diagonal line texture for paper feel
+      ctx.save();
+      ctx.globalAlpha = 0.022;
+      ctx.strokeStyle = '#7a7060';
+      ctx.lineWidth = 0.5;
+      const spacing = 42;
+      for (let i = -H; i < W + H; i += spacing) {
         ctx.beginPath();
-        const first = points[r][0];
-        ctx.moveTo(first.x, first.y);
-
-        for (let c = 1; c < cols; c++) {
-          const pt = points[r][c];
-          ctx.lineTo(pt.x, pt.y);
-        }
-
-        const alpha = points[r][Math.floor(cols / 2)].depthAlpha * 0.28;
-        ctx.strokeStyle = `rgba(60, 55, 45, ${alpha})`;
-        ctx.lineWidth = Math.max(0.6, (r / rows) * 1.4);
+        ctx.moveTo(i, 0);
+        ctx.lineTo(i + H, H);
         ctx.stroke();
       }
+      ctx.restore();
 
-      // 4. Draw Grid Lines (Vertical Perspective Lines)
-      for (let c = 0; c < cols; c += 2) {
-        ctx.beginPath();
-        ctx.moveTo(points[0][c].x, points[0][c].y);
-
-        for (let r = 1; r < rows; r++) {
-          const pt = points[r][c];
-          ctx.lineTo(pt.x, pt.y);
-        }
-
-        const alpha = (c % 4 === 0 ? 0.2 : 0.1) * (1 - Math.abs(c - cols / 2) / (cols / 2));
-        ctx.strokeStyle = `rgba(80, 75, 65, ${alpha})`;
-        ctx.lineWidth = 0.7;
-        ctx.stroke();
-      }
-
-      // 5. Draw Glowing Floating Particle Intersections on Front Nodes
-      for (let r = Math.floor(rows * 0.35); r < rows; r += 2) {
-        for (let c = 0; c < cols; c += 3) {
-          const pt = points[r][c];
-          const distToMouse = Math.hypot(pt.x - mouseX, pt.y - mouseY);
-          const isNearMouse = distToMouse < 160;
-
-          ctx.beginPath();
-          const nodeRadius = isNearMouse ? 2.5 : 1.2;
-          ctx.arc(pt.x, pt.y, nodeRadius, 0, Math.PI * 2);
-
-          if (isNearMouse) {
-            ctx.fillStyle = 'rgba(17, 17, 17, 0.75)';
-            ctx.shadowColor = 'rgba(0, 0, 0, 0.2)';
-            ctx.shadowBlur = 6;
-          } else {
-            ctx.fillStyle = `rgba(120, 115, 105, ${pt.depthAlpha * 0.45})`;
-            ctx.shadowBlur = 0;
-          }
-          ctx.fill();
-        }
-      }
-      ctx.shadowBlur = 0;
-
-      animationFrameId = requestAnimationFrame(render);
+      raf = requestAnimationFrame(draw);
     };
 
-    render();
+    draw();
 
     return () => {
-      cancelAnimationFrame(animationFrameId);
-      window.removeEventListener('resize', handleResize);
-      parent?.removeEventListener('mousemove', handleMouseMove);
-      parent?.removeEventListener('mouseleave', handleMouseLeave);
+      cancelAnimationFrame(raf);
+      window.removeEventListener('resize', resize);
     };
   }, []);
 
@@ -187,6 +90,7 @@ export const HeroCanvas: React.FC = () => {
     <canvas
       ref={canvasRef}
       className="absolute inset-0 w-full h-full pointer-events-none z-0"
+      style={{ width: '100%', height: '100%' }}
     />
   );
 };
