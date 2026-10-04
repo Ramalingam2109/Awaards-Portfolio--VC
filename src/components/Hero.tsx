@@ -38,38 +38,18 @@ export const Hero: React.FC = () => {
       ref={containerRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="relative h-screen min-h-[600px] max-h-[960px] w-full flex flex-col justify-center items-center bg-[#fafafa] overflow-hidden select-none px-4 pt-16 pb-8"
+      className="relative h-screen min-h-[600px] max-h-[960px] w-full flex flex-col justify-center items-center bg-[#f8f7f4] overflow-hidden select-none px-4 pt-16 pb-8"
     >
-      {/* 1. Subtle Architectural Dot Grid Pattern */}
-      <div className="absolute inset-0 bg-[radial-gradient(#d5d1c8_1px,transparent_1px)] [background-size:28px_28px] opacity-60 pointer-events-none" />
-
-      {/* 2. Interactive Kinetic Wave & Constellation Canvas */}
+      {/* 1. Interactive 3D Wave Perspective Grid Canvas */}
       <HeroCanvas />
 
-      {/* 3. Ambient Radial Glow */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_40%,rgba(250,250,250,0.8)_100%)] pointer-events-none" />
-
-      {/* Editorial Micro-Details (Top Left & Bottom Left) */}
-      <div className="absolute top-24 left-6 sm:left-12 pointer-events-none z-10 flex flex-col gap-1">
-        <span className="text-[10px] sm:text-[11px] font-mono tracking-widest text-[#8a8a7c] uppercase">
-          RAM // PORTFOLIO
-        </span>
-        <span className="text-[10px] font-mono tracking-wider text-[#a3a396]">
-          FULL-STACK SOFTWARE ENGINEER
-        </span>
-      </div>
-
-      <div className="absolute bottom-10 left-6 sm:left-12 pointer-events-none z-10 flex items-center gap-2">
-        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-        <span className="text-[10px] sm:text-[11px] font-mono tracking-widest text-[#8a8a7c] uppercase">
-          CHENNAI, IN // 2026
-        </span>
-      </div>
+      {/* 2. Ambient Vignette Glow */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_30%,rgba(248,247,244,0.6)_100%)] pointer-events-none" />
 
       {/* Centered Composition fitting viewport layout */}
       <div className="relative w-full max-w-4xl mx-auto flex items-center justify-center my-auto z-10">
         
-        {/* Background Geometric / 3D Art Card */}
+        {/* Background High-End 3D Visual Art Card */}
         <motion.div
           style={{
             rotateX,
@@ -81,23 +61,24 @@ export const Hero: React.FC = () => {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-          className="relative w-[280px] sm:w-[380px] md:w-[440px] h-[320px] sm:h-[420px] md:h-[480px] max-h-[55vh] rounded-2xl overflow-hidden shadow-[0_25px_60px_-15px_rgba(0,0,0,0.18)] bg-[#e8e6df] border border-black/10 group"
+          className="relative w-[300px] sm:w-[420px] md:w-[480px] h-[340px] sm:h-[440px] md:h-[500px] max-h-[58vh] rounded-3xl overflow-hidden shadow-[0_30px_70px_-15px_rgba(0,0,0,0.25)] bg-[#111111] border border-black/10 group"
         >
-          {/* Dynamic 3D Geometric Architectural Artwork */}
+          {/* Cinematic Liquid Chrome / 3D Abstract Sculpture */}
           <img
-            src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80"
-            alt="Abstract architectural sculpture"
-            className="w-full h-full object-cover grayscale contrast-105 brightness-95 opacity-90 transition-transform duration-700 group-hover:scale-105"
+            src="https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?auto=format&fit=crop&w=1200&q=80"
+            alt="3D Liquid Metallic Sculpture"
+            className="w-full h-full object-cover grayscale contrast-125 brightness-90 opacity-80 transition-transform duration-1000 group-hover:scale-110"
           />
 
-          {/* Glass Sheen & Gradients */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#e8e6df]/60 via-transparent to-[#fafafa]/20" />
+          {/* Deep Glass Reflections & Lighting Gradients */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-white/10" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-black/20" />
           
-          {/* Corner Framing Marks */}
-          <div className="absolute top-3 left-3 w-2 h-2 border-t border-l border-black/30" />
-          <div className="absolute top-3 right-3 w-2 h-2 border-t border-r border-black/30" />
-          <div className="absolute bottom-3 left-3 w-2 h-2 border-b border-l border-black/30" />
-          <div className="absolute bottom-3 right-3 w-2 h-2 border-b border-r border-black/30" />
+          {/* Sleek Corner Architectural Framing Marks */}
+          <div className="absolute top-4 left-4 w-3 h-3 border-t-2 border-l-2 border-white/40" />
+          <div className="absolute top-4 right-4 w-3 h-3 border-t-2 border-r-2 border-white/40" />
+          <div className="absolute bottom-4 left-4 w-3 h-3 border-b-2 border-l-2 border-white/40" />
+          <div className="absolute bottom-4 right-4 w-3 h-3 border-b-2 border-r-2 border-white/40" />
         </motion.div>
 
         {/* 3 Overlapping Lines: strictly ONE line each (whitespace-nowrap) */}
