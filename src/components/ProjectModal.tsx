@@ -2,7 +2,6 @@ import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ExternalLink, Github, CheckCircle2 } from 'lucide-react';
 import { Project } from '../data/portfolioData';
-import { soundFX } from '../utils/audio';
 
 interface Props {
   project: Project | null;
@@ -28,7 +27,7 @@ export const ProjectModal: React.FC<Props> = ({ project, onClose }) => {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.96, y: 20 }}
           transition={{ type: 'spring', damping: 26, stiffness: 300 }}
-          className="relative w-full max-w-3xl bg-[#121216] border border-white/15 rounded-3xl overflow-hidden shadow-2xl z-10 my-8 max-h-[90vh] flex flex-col text-[#f3efe6]"
+          className="relative w-full max-w-3xl bg-[#141414] border border-white/10 rounded-3xl overflow-hidden shadow-2xl z-10 my-8 max-h-[90vh] flex flex-col text-[#f0f0f0]"
         >
           <div className="relative h-64 sm:h-80 w-full overflow-hidden shrink-0 bg-black">
             <img
@@ -36,20 +35,17 @@ export const ProjectModal: React.FC<Props> = ({ project, onClose }) => {
               alt={project.title}
               className="w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#121216] via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#141414] via-transparent to-transparent" />
             
             <button
-              onClick={() => {
-                soundFX.playClick();
-                onClose();
-              }}
+              onClick={onClose}
               className="absolute top-4 right-4 p-2.5 rounded-full bg-black/60 hover:bg-black text-white/80 hover:text-white border border-white/10 backdrop-blur-md transition-colors"
             >
               <X className="w-5 h-5" />
             </button>
 
             <div className="absolute bottom-4 left-6 right-6 flex items-center justify-between">
-              <span className="px-3.5 py-1 rounded-full bg-[#c8e972] text-black text-xs font-bold font-mono uppercase tracking-wider">
+              <span className="px-3.5 py-1 rounded-full bg-white text-black text-xs font-bold font-mono uppercase tracking-wider">
                 {project.category}
               </span>
               <span className="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md text-white/80 text-xs font-mono border border-white/10">
@@ -63,11 +59,11 @@ export const ProjectModal: React.FC<Props> = ({ project, onClose }) => {
               <h2 className="text-2xl sm:text-4xl font-extrabold font-display text-white">
                 {project.title}
               </h2>
-              <p className="text-[#c8e972] text-xs font-mono mt-1">Role: {project.role}</p>
+              <p className="text-[#8a8a7c] text-xs font-mono mt-1">Role: {project.role}</p>
             </div>
 
             <div>
-              <h4 className="text-xs font-mono opacity-40 uppercase tracking-widest mb-2.5">
+              <h4 className="text-xs font-mono opacity-50 uppercase tracking-widest mb-2.5">
                 Technology Stack
               </h4>
               <div className="flex flex-wrap gap-2">
@@ -83,7 +79,7 @@ export const ProjectModal: React.FC<Props> = ({ project, onClose }) => {
             </div>
 
             <div>
-              <h4 className="text-xs font-mono opacity-40 uppercase tracking-widest mb-2.5">
+              <h4 className="text-xs font-mono opacity-50 uppercase tracking-widest mb-2.5">
                 Overview & Architecture
               </h4>
               <p className="text-white/80 text-sm sm:text-base leading-relaxed font-normal">
@@ -93,13 +89,13 @@ export const ProjectModal: React.FC<Props> = ({ project, onClose }) => {
 
             {project.highlights && project.highlights.length > 0 && (
               <div>
-                <h4 className="text-xs font-mono opacity-40 uppercase tracking-widest mb-3">
+                <h4 className="text-xs font-mono opacity-50 uppercase tracking-widest mb-3">
                   Key Technical Highlights
                 </h4>
                 <div className="space-y-2">
                   {project.highlights.map((h, i) => (
                     <div key={i} className="flex items-start gap-2.5 text-xs sm:text-sm text-white/75">
-                      <CheckCircle2 className="w-4 h-4 text-[#c8e972] shrink-0 mt-0.5" />
+                      <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
                       <span>{h}</span>
                     </div>
                   ))}
@@ -113,8 +109,6 @@ export const ProjectModal: React.FC<Props> = ({ project, onClose }) => {
                   href={project.githubUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  onMouseEnter={() => soundFX.playHover()}
-                  onClick={() => soundFX.playClick()}
                   className="flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-white/10 hover:bg-white/15 border border-white/10 text-white text-xs font-bold transition-all"
                 >
                   <Github className="w-4 h-4" />
@@ -126,9 +120,7 @@ export const ProjectModal: React.FC<Props> = ({ project, onClose }) => {
                   href={project.liveUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  onMouseEnter={() => soundFX.playHover()}
-                  onClick={() => soundFX.playClick()}
-                  className="flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-[#c8e972] hover:bg-[#b8d962] text-black text-xs font-bold transition-all shadow-lg"
+                  className="flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-white hover:bg-[#e0e0e0] text-black text-xs font-bold transition-all shadow-lg"
                 >
                   <span>Launch Live Demo</span>
                   <ExternalLink className="w-4 h-4" />

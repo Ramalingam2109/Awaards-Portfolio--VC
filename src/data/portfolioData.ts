@@ -12,11 +12,14 @@ export interface Project {
   highlights: string[];
 }
 
-export interface Skill {
+export interface PeriodicSkill {
   id: string;
+  number: string;
+  symbol: string;
   name: string;
-  category: 'Frontend' | 'Backend' | 'Database & Cloud' | 'Tools & Architecture';
+  family: 'Languages' | 'Frontend' | 'Backend' | 'Databases' | 'Tools' | 'Core';
   level: string;
+  description: string;
 }
 
 export interface Experience {
@@ -33,135 +36,151 @@ export const portfolioData = {
   profile: {
     name: 'RAM',
     fullName: 'RAM',
-    tagline: 'Creative Developer & Software Engineer',
-    headline: 'Designing and engineering digital products with motion, precision, and architectural discipline.',
-    bio: 'Based in Chennai, India. I specialize in building minimal, high-performance web experiences and scalable full-stack applications. Passionate about tactile interactions, editorial typography, and buttery-smooth interfaces.',
+    tagline: 'Aspiring Software Engineer & Web Developer',
+    headline: 'Building modern web applications with clean code, strong fundamentals, and genuine passion.',
+    bio: 'Computer Science student and aspiring software engineer based in Chennai, India. Focused on full-stack web development, data structures, and modern JavaScript frameworks. Motivated to learn quickly, collaborate effectively, and contribute to impactful software engineering teams.',
     location: 'Chennai, India',
-    status: 'Available for Select Opportunities',
+    status: 'Seeking Entry-Level Roles & Opportunities',
     email: 'ramalingam2109@gmail.com',
     github: 'https://github.com/Ramalingam2109',
     linkedin: 'https://linkedin.com/in/ramalingam2109',
-    yearsExp: '2+ Years',
+    yearsExp: 'Fresher (0 Years)',
     available: true
   },
   stats: [
-    { number: '15+', label: 'Public Repositories', note: 'Open-source code on GitHub' },
-    { number: '04+', label: 'Flagship Systems', note: 'Full-stack & interactive web apps' },
-    { number: '100%', label: 'Craft & Precision', note: 'Modern TypeScript & responsive UI' },
-    { number: 'IST', label: 'Chennai, India', note: 'Working with teams worldwide' }
+    { number: '15+', label: 'GitHub Repositories', note: 'Personal and academic code' },
+    { number: '100%', label: 'Commitment to Growth', note: 'Continuous daily learning' },
+    { number: 'CS', label: 'Solid Core Fundamentals', note: 'Data structures & algorithms' },
+    { number: 'IST', label: 'Chennai, India', note: 'Open to remote & on-site' }
   ],
+  periodicSkills: [
+    // Languages
+    { id: 'sk-1', number: '01', symbol: 'C++', name: 'C++', family: 'Languages', level: 'Core Fundamentals', description: 'Object-oriented programming, memory management, and problem solving.' },
+    { id: 'sk-2', number: '02', symbol: 'Jv', name: 'Java', family: 'Languages', level: 'Intermediate', description: 'Core OOP concepts, collections framework, and application logic.' },
+    { id: 'sk-3', number: '03', symbol: 'Py', name: 'Python', family: 'Languages', level: 'Proficient', description: 'Scripting, backend development with FastAPI, and data manipulation.' },
+    { id: 'sk-4', number: '04', symbol: 'Js', name: 'JavaScript', family: 'Languages', level: 'Proficient', description: 'ES6+ standards, asynchronous execution, DOM handling, and modern patterns.' },
+    { id: 'sk-5', number: '05', symbol: 'Ts', name: 'TypeScript', family: 'Languages', level: 'Proficient', description: 'Static typing, interfaces, type inference, and scalable development.' },
+
+    // Frontend
+    { id: 'sk-6', number: '06', symbol: 'Re', name: 'React.js', family: 'Frontend', level: 'Primary Library', description: 'Functional components, custom hooks, virtual DOM, and component state.' },
+    { id: 'sk-7', number: '07', symbol: 'Nx', name: 'Next.js', family: 'Frontend', level: 'Framework', description: 'Server-side rendering, API routes, App router, and optimization.' },
+    { id: 'sk-8', number: '08', symbol: 'Ht', name: 'HTML5', family: 'Frontend', level: 'Fundamental', description: 'Semantic structure, accessibility standards, and SEO best practices.' },
+    { id: 'sk-9', number: '09', symbol: 'Cs', name: 'CSS3', family: 'Frontend', level: 'Styling', description: 'Flexbox, Grid layouts, keyframe animations, and responsive media queries.' },
+    { id: 'sk-10', number: '10', symbol: 'Tw', name: 'Tailwind CSS', family: 'Frontend', level: 'Utility CSS', description: 'Rapid responsive UI engineering and custom theme configurations.' },
+    { id: 'sk-11', number: '11', symbol: 'Fm', name: 'Framer Motion', family: 'Frontend', level: 'Animation', description: 'Spring physics, layout transitions, and micro-interactions.' },
+
+    // Backend
+    { id: 'sk-12', number: '12', symbol: 'No', name: 'Node.js', family: 'Backend', level: 'Runtime', description: 'Event-driven architecture, non-blocking I/O, and npm package ecosystem.' },
+    { id: 'sk-13', number: '13', symbol: 'Ex', name: 'Express.js', family: 'Backend', level: 'REST Framework', description: 'Middleware composition, route handlers, and REST API development.' },
+    { id: 'sk-14', number: '14', symbol: 'Fa', name: 'FastAPI', family: 'Backend', level: 'Python Framework', description: 'High-performance asynchronous REST endpoints and Pydantic validation.' },
+    { id: 'sk-15', number: '15', symbol: 'Ra', name: 'REST APIs', family: 'Backend', level: 'Architecture', description: 'HTTP verbs, status codes, JSON formatting, and CRUD workflows.' },
+
+    // Databases
+    { id: 'sk-16', number: '16', symbol: 'Sq', name: 'SQL', family: 'Databases', level: 'Query Language', description: 'Relational schema design, normalization, joins, and indexing.' },
+    { id: 'sk-17', number: '17', symbol: 'Pg', name: 'PostgreSQL', family: 'Databases', level: 'RDBMS', description: 'Relational database administration, constraints, and transactions.' },
+    { id: 'sk-18', number: '18', symbol: 'My', name: 'MySQL', family: 'Databases', level: 'RDBMS', description: 'Tables, queries, relational models, and stored procedures.' },
+    { id: 'sk-19', number: '19', symbol: 'Mg', name: 'MongoDB', family: 'Databases', level: 'NoSQL', description: 'Document stores, Mongoose schemas, and aggregation pipelines.' },
+
+    // Tools
+    { id: 'sk-20', number: '20', symbol: 'Gt', name: 'Git', family: 'Tools', level: 'Version Control', description: 'Branching strategies, pull requests, merges, and commit hygiene.' },
+    { id: 'sk-21', number: '21', symbol: 'Gh', name: 'GitHub', family: 'Tools', level: 'Collaboration', description: 'Repository hosting, GitHub Actions, CI/CD basics, and documentation.' },
+    { id: 'sk-22', number: '22', symbol: 'Pm', name: 'Postman', family: 'Tools', level: 'Testing', description: 'API endpoint verification, request collections, and environment testing.' },
+    { id: 'sk-23', number: '23', symbol: 'Vs', name: 'VS Code', family: 'Tools', level: 'Primary IDE', description: 'Extensions, debugging workflows, and terminal integration.' },
+
+    // Core
+    { id: 'sk-24', number: '24', symbol: 'Ds', name: 'Data Structures', family: 'Core', level: 'CS Fundamentals', description: 'Arrays, linked lists, stacks, queues, trees, graphs, and hash maps.' },
+    { id: 'sk-25', number: '25', symbol: 'Al', name: 'Algorithms', family: 'Core', level: 'CS Fundamentals', description: 'Searching, sorting, recursion, dynamic programming, and Big-O notation.' },
+    { id: 'sk-26', number: '26', symbol: 'Op', name: 'OOP Concepts', family: 'Core', level: 'Paradigm', description: 'Encapsulation, inheritance, polymorphism, and abstraction.' }
+  ] as PeriodicSkill[],
   projects: [
     {
       id: 'proj-1',
       title: 'Awwwards Portfolio Experience',
-      category: 'Creative Development & WebGL',
+      category: 'Interactive Web Application',
       year: '2026',
-      role: 'Design & Engineering',
+      role: 'Frontend Developer',
       techStack: ['React', 'TypeScript', 'Tailwind CSS', 'Framer Motion', 'Lenis'],
       githubUrl: 'https://github.com/Ramalingam2109/Awaards-Portfolio--VC',
       liveUrl: 'https://ramalingam-portfolio.vercel.app',
       image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80',
-      description: 'An editorial developer portfolio featuring scroll-driven theme transitions (Dark to Light), spring-physics cursor follower, kinetic typography, and silky smooth momentum scrolling.',
+      description: 'A personal portfolio website exploring Awwwards-inspired design principles, smooth scroll animations, and interactive component architecture.',
       highlights: [
-        'Dynamic scroll-driven background morphing between dark and warm paper light',
-        'Spring physics trailing cursor with interactive hitboxes',
-        'Tactile Web Audio API micro-sound feedback',
-        'Responsive layout tuned for 60fps performance'
+        'Built with React, Vite, and strict TypeScript types',
+        'Implemented smooth inertial scrolling with Lenis',
+        'Engineered responsive layouts and theme transition states',
+        'Applied modern CSS utilities and spring-physics interactions'
       ]
     },
     {
       id: 'proj-2',
-      title: 'Nexus Cloud Telemetry',
-      category: 'Full-Stack Platform',
+      title: 'DevPulse Telemetry Dashboard',
+      category: 'Full-Stack Project',
       year: '2025',
-      role: 'Full-Stack Lead',
+      role: 'Full-Stack Developer',
       techStack: ['Next.js', 'TypeScript', 'Node.js', 'PostgreSQL', 'Tailwind'],
       githubUrl: 'https://github.com/Ramalingam2109',
       liveUrl: '#',
       image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80',
-      description: 'A cloud infrastructure intelligence platform providing sub-second streaming analytics, latency tracking, and anomaly detection.',
+      description: 'A practical full-stack monitoring dashboard built to practice real-time data handling, database queries, and metric visualizations.',
       highlights: [
-        'Low-latency WebSocket streaming metrics',
-        'Interactive SVG heatmaps and anomaly alarms',
-        'Multi-tenant database isolation'
+        'Connected frontend dashboard to Node.js backend endpoints',
+        'Designed relational tables in PostgreSQL for metric logs',
+        'Created responsive analytical graphs with Tailwind and SVG'
       ]
     },
     {
       id: 'proj-3',
-      title: 'Aura Sound Lab',
-      category: 'Experimental Audio & UI',
+      title: 'Audio Synth Playground',
+      category: 'Web Audio Project',
       year: '2025',
-      role: 'Creative Developer',
-      techStack: ['React', 'Web Audio API', 'Canvas', 'TypeScript', 'FastAPI'],
+      role: 'Frontend Developer',
+      techStack: ['React', 'Web Audio API', 'HTML5 Canvas', 'TypeScript'],
       githubUrl: 'https://github.com/Ramalingam2109',
       liveUrl: '#',
       image: 'https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?auto=format&fit=crop&w=1200&q=80',
-      description: 'An audio synthesis studio running natively in the browser with harmonic visualization shaders and custom modulators.',
+      description: 'An interactive browser experiment exploring the Web Audio API, sound generation algorithms, and real-time canvas frequency spectrum visualizers.',
       highlights: [
-        'Real-time frequency FFT visualizer on HTML5 Canvas',
-        'Node-based audio routing and low-latency buffer management',
-        'Custom interactive knobs and tactile sliders'
+        'Utilized Web Audio API oscillator and gain nodes',
+        'Rendered real-time dynamic frequency FFT waves on Canvas',
+        'Structured modular TypeScript state management'
       ]
     },
     {
       id: 'proj-4',
-      title: 'Vanguard Commerce',
-      category: 'Headless Web Application',
+      title: 'Modern Storefront Application',
+      category: 'Web Development Project',
       year: '2024',
-      role: 'Frontend Engineer',
-      techStack: ['React', 'Redux', 'Tailwind CSS', 'Stripe API'],
+      role: 'Frontend Developer',
+      techStack: ['React', 'JavaScript', 'Tailwind CSS', 'REST API'],
       githubUrl: 'https://github.com/Ramalingam2109',
       liveUrl: '#',
       image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80',
-      description: 'An ultra-lean headless storefront built for instant catalog navigation, seamless page transitions, and frictionless checkout flows.',
+      description: 'A responsive e-commerce web application featuring client-side routing, product filtering, dynamic cart state, and responsive checkout UI.',
       highlights: [
-        'Sub-50ms client-side page transitions',
-        'Optimistic cart synchronization with local state',
-        'Stripe Checkout and webhook integration'
+        'Implemented persistent shopping cart state in localStorage',
+        'Built searchable product catalogs with dynamic category filters',
+        'Developed clean, mobile-first responsive interfaces'
       ]
     }
-  ],
-  skills: [
-    { id: 'sk-1', name: 'React & Next.js', category: 'Frontend', level: 'Production Ready' },
-    { id: 'sk-2', name: 'TypeScript', category: 'Frontend', level: 'Core Competency' },
-    { id: 'sk-3', name: 'Tailwind CSS & Styling', category: 'Frontend', level: 'Expertise' },
-    { id: 'sk-4', name: 'Framer Motion & GSAP', category: 'Frontend', level: 'Motion Design' },
-    { id: 'sk-5', name: 'Node.js & Express', category: 'Backend', level: 'System Design' },
-    { id: 'sk-6', name: 'Python & FastAPI', category: 'Backend', level: 'API Development' },
-    { id: 'sk-7', name: 'PostgreSQL & MongoDB', category: 'Database & Cloud', level: 'Data Modeling' },
-    { id: 'sk-8', name: 'Git & GitHub Workflow', category: 'Tools & Architecture', level: 'Daily Driver' },
-    { id: 'sk-9', name: 'Docker & Containerization', category: 'Tools & Architecture', level: 'Infrastructure' },
-    { id: 'sk-10', name: 'Data Structures & Algorithms', category: 'Tools & Architecture', level: 'Fundamentals' },
-    { id: 'sk-11', name: 'UI/UX & Design Systems', category: 'Frontend', level: 'Art Direction' },
-    { id: 'sk-12', name: 'REST & GraphQL APIs', category: 'Backend', level: 'Integration' }
   ],
   experiences: [
     {
       id: 'exp-1',
-      role: 'Creative Developer & Software Engineer',
-      company: 'Independent / Freelance',
-      period: '2024 — Present',
-      location: 'Chennai / Remote',
-      description: 'Developing high-impact web products, interactive user experiences, and bespoke software systems for digital-first brands and teams.',
-      stack: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS', 'Framer Motion']
+      role: 'Computer Science & Engineering Scholar',
+      company: 'Undergraduate Degree',
+      period: '2022 — Present',
+      location: 'Chennai, India',
+      description: 'Academically focused on core computer science foundations including data structures, algorithms, database management systems, operating systems, and computer networks.',
+      stack: ['Data Structures', 'Algorithms', 'Java', 'C++', 'SQL', 'Computer Networks']
     },
     {
       id: 'exp-2',
-      role: 'Software Engineering & CS Scholar',
-      company: 'University Studies',
-      period: '2022 — Present',
-      location: 'Chennai, India',
-      description: 'Rigorous study in algorithmic complexity, distributed systems, software engineering patterns, and modern full-stack web technologies.',
-      stack: ['Algorithms', 'Python', 'Java', 'Databases', 'Computer Networks']
-    },
-    {
-      id: 'exp-3',
-      role: 'Open Source Contributor',
-      company: 'GitHub Community',
+      role: 'Independent Web & Software Development',
+      company: 'Self-Directed Projects',
       period: '2023 — Present',
-      location: 'Global',
-      description: 'Contributing to open developer tooling, crafting UI component libraries, and experimenting with kinetic front-end interactions.',
-      stack: ['Git', 'TypeScript', 'Vite', 'Open Source']
+      location: 'Chennai, India',
+      description: 'Actively building modern web applications, learning production-grade TypeScript workflows, exploring backend architectures, and solving programming challenges.',
+      stack: ['React', 'TypeScript', 'Node.js', 'Express', 'Tailwind CSS', 'Git']
     }
   ]
 };

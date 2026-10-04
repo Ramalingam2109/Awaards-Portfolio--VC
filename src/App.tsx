@@ -6,6 +6,7 @@ import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { Statement } from './components/Statement';
 import { Services } from './components/Services';
+import { PeriodicSkills } from './components/PeriodicSkills';
 import { Projects } from './components/Projects';
 import { ProjectModal } from './components/ProjectModal';
 import { Contact } from './components/Contact';
@@ -16,12 +17,12 @@ export const App: React.FC = () => {
   const [currentTheme, setCurrentTheme] = useState<'dark' | 'light'>('light');
   const themeRef = useRef<'dark' | 'light'>('light');
 
-  // Buttery-smooth Scroll-Driven Theme Switcher matching Huy Ng:
-  // 1. Hero (#hero)          -> Light (#fafafa)
-  // 2. Statement (#about)    -> Dark  (#0e0e0e)
-  // 3. Services (#services)  -> Light (#fafafa)
-  // 4. Works (#works)        -> Light (#fafafa)
-  // 5. Contact (#contact)    -> Dark  (#0e0e0e)
+  // Smooth Whole-Page Scroll-Driven Theme Switcher:
+  // 1. Hero (#hero)                     -> Light (#fafafa)
+  // 2. Statement (#about)               -> Dark  (#0e0e0e)
+  // 3. Services & Stack (#services)     -> Light (#fafafa)
+  // 4. Works (#works)                   -> Light (#fafafa)
+  // 5. Contact (#contact)               -> Dark  (#0e0e0e)
   const updateTheme = useCallback(() => {
     const scrollY = window.scrollY;
     const windowHeight = window.innerHeight;
@@ -32,9 +33,9 @@ export const App: React.FC = () => {
 
     if (!aboutEl || !servicesEl || !contactEl) return;
 
-    const aboutTop = aboutEl.offsetTop - windowHeight * 0.4;
-    const servicesTop = servicesEl.offsetTop - windowHeight * 0.4;
-    const contactTop = contactEl.offsetTop - windowHeight * 0.4;
+    const aboutTop = aboutEl.offsetTop - windowHeight * 0.35;
+    const servicesTop = servicesEl.offsetTop - windowHeight * 0.35;
+    const contactTop = contactEl.offsetTop - windowHeight * 0.35;
 
     let newTheme: 'dark' | 'light' = 'light';
 
@@ -75,7 +76,7 @@ export const App: React.FC = () => {
 
   return (
     <SmoothScroll>
-      <div className="relative min-h-screen font-sans antialiased overflow-x-hidden">
+      <div className="relative min-h-screen font-sans antialiased overflow-x-hidden transition-colors duration-700 bg-[var(--theme-bg)] text-[var(--theme-text)]">
         {/* Subtle Film Grain Noise */}
         <div className="noise-overlay" />
 
@@ -86,23 +87,26 @@ export const App: React.FC = () => {
         <Navbar currentTheme={currentTheme} />
 
         <main>
-          {/* 1. Hero: Screenshot 1 (Light - HEY, I'M RAM) */}
+          {/* 1. Hero: Screenshot 1 (Light - HEY, I'M RAM, fits in single viewport layout) */}
           <Hero />
 
-          {/* 2. Statement: Screenshot 2 (Dark - I create elevating digital experiences...) */}
+          {/* 2. Statement: Screenshot 2 (Dark - I build modern web applications...) */}
           <Statement />
 
-          {/* 3. Services & Toolbox: Screenshot 3 (Light - my expertises. & my digital tool box.) */}
+          {/* 3. Services: Screenshot 3 (Light - my expertises. focused on Web & Software Dev) */}
           <Services />
 
-          {/* 4. Selected Works (Light - Interactive Awwwards list with hover preview) */}
+          {/* 4. Periodic Table of Tech Elements (Screenshot 1: interactive matrix in 6 families) */}
+          <PeriodicSkills />
+
+          {/* 5. Selected Works (Light - Interactive Awwwards list with hover preview) */}
           <Projects onSelectProject={(p) => setSelectedProject(p)} />
 
-          {/* 5. Contact (Dark - let's talk. & email copy) */}
+          {/* 6. Contact (Dark - let's talk. & email link with mailto) */}
           <Contact />
         </main>
 
-        {/* 6. Footer (Dark - ram", Chennai time, Back to top) */}
+        {/* 7. Footer (Dark - ram", Chennai time, Back to top) */}
         <Footer />
 
         {/* Project Inspection Drawer Modal */}

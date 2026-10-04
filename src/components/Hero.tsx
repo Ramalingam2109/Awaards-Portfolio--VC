@@ -12,10 +12,10 @@ export const Hero: React.FC = () => {
   const smoothX = useSpring(mouseX, springConfig);
   const smoothY = useSpring(mouseY, springConfig);
 
-  const rotateX = useTransform(smoothY, [-0.5, 0.5], [6, -6]);
-  const rotateY = useTransform(smoothX, [-0.5, 0.5], [-6, 6]);
-  const imgTranslateX = useTransform(smoothX, [-0.5, 0.5], [-12, 12]);
-  const imgTranslateY = useTransform(smoothY, [-0.5, 0.5], [-12, 12]);
+  const rotateX = useTransform(smoothY, [-0.5, 0.5], [5, -5]);
+  const rotateY = useTransform(smoothX, [-0.5, 0.5], [-5, 5]);
+  const imgTranslateX = useTransform(smoothX, [-0.5, 0.5], [-8, 8]);
+  const imgTranslateY = useTransform(smoothY, [-0.5, 0.5], [-8, 8]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!containerRef.current) return;
@@ -37,10 +37,10 @@ export const Hero: React.FC = () => {
       ref={containerRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="relative min-h-screen w-full flex items-center justify-center bg-[#fafafa] overflow-hidden select-none px-4"
+      className="relative h-screen min-h-[600px] max-h-[960px] w-full flex flex-col justify-center items-center bg-[#fafafa] overflow-hidden select-none px-4 pt-16 pb-8"
     >
-      {/* Centered Composition matching Huy Ng screenshot */}
-      <div className="relative w-full max-w-4xl mx-auto flex items-center justify-center py-20">
+      {/* Centered Composition fitting viewport layout */}
+      <div className="relative w-full max-w-4xl mx-auto flex items-center justify-center my-auto">
         
         {/* Background Geometric / Origami 3D Art Card */}
         <motion.div
@@ -51,10 +51,10 @@ export const Hero: React.FC = () => {
             y: imgTranslateY,
             transformPerspective: 1000,
           }}
-          initial={{ opacity: 0, scale: 0.92 }}
+          initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-          className="relative w-[300px] sm:w-[420px] md:w-[500px] h-[340px] sm:h-[460px] md:h-[540px] rounded-2xl overflow-hidden shadow-sm bg-[#e8e6df]"
+          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+          className="relative w-[280px] sm:w-[380px] md:w-[440px] h-[320px] sm:h-[420px] md:h-[480px] max-h-[55vh] rounded-2xl overflow-hidden shadow-sm bg-[#e8e6df]"
         >
           {/* Origami polygonal architectural background image */}
           <img
@@ -65,40 +65,40 @@ export const Hero: React.FC = () => {
           <div className="absolute inset-0 bg-gradient-to-t from-[#e8e6df]/50 via-transparent to-[#fafafa]/20" />
         </motion.div>
 
-        {/* 3 Overlapping Lines of Massive Bold Typography */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-10 text-center leading-[0.88]">
+        {/* 3 Overlapping Lines: strictly ONE line each (whitespace-nowrap) */}
+        <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-10 text-center leading-[0.85]">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-            className="w-full"
+            className="w-full flex justify-center"
           >
             {/* Line 1: Solid Black */}
-            <h1 className="text-[clamp(2.8rem,9vw,8.5rem)] font-extrabold font-display tracking-tight text-[#111111] uppercase">
+            <h1 className="text-[clamp(2.2rem,6.5vw,5.8rem)] font-black font-display tracking-tight text-[#111111] uppercase whitespace-nowrap">
               HEY, I'M RAM
             </h1>
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="w-full my-[-0.05em]"
+            className="w-full flex justify-center my-[-0.04em]"
           >
             {/* Line 2: Outlined / Hollow Text */}
-            <h2 className="text-[clamp(2.8rem,9vw,8.5rem)] font-extrabold font-display tracking-tight text-stroke uppercase">
+            <h2 className="text-[clamp(2.2rem,6.5vw,5.8rem)] font-black font-display tracking-tight text-stroke uppercase whitespace-nowrap">
               HEY, I'M RAM
             </h2>
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
-            className="w-full"
+            className="w-full flex justify-center"
           >
             {/* Line 3: Solid Black */}
-            <h3 className="text-[clamp(2.8rem,9vw,8.5rem)] font-extrabold font-display tracking-tight text-[#111111] uppercase">
+            <h3 className="text-[clamp(2.2rem,6.5vw,5.8rem)] font-black font-display tracking-tight text-[#111111] uppercase whitespace-nowrap">
               HEY, I'M RAM
             </h3>
           </motion.div>
@@ -106,8 +106,8 @@ export const Hero: React.FC = () => {
 
       </div>
 
-      {/* Right side vertical 'scroll -' indicator exactly like screenshot 1 */}
-      <div className="absolute right-6 sm:right-10 bottom-12 flex items-center gap-2 rotate-90 origin-right pointer-events-none text-xs tracking-widest text-[#8a8a7c] uppercase font-medium">
+      {/* Right side vertical 'scroll -' indicator */}
+      <div className="absolute right-4 sm:right-8 bottom-10 flex items-center gap-2 rotate-90 origin-right pointer-events-none text-[11px] tracking-widest text-[#8a8a7c] uppercase font-medium">
         <span>scroll</span>
         <span className="w-4 h-[1px] bg-[#8a8a7c]"></span>
       </div>
