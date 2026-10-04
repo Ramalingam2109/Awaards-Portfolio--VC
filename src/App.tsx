@@ -11,11 +11,17 @@ import { Projects } from './components/Projects';
 import { ProjectModal } from './components/ProjectModal';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
+import { analytics } from './services/analyticsTracker';
 
 export const App: React.FC = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [currentTheme, setCurrentTheme] = useState<'dark' | 'light'>('light');
   const themeRef = useRef<'dark' | 'light'>('light');
+
+  // Initialize analytics session and tracking on mount
+  useEffect(() => {
+    analytics.init();
+  }, []);
 
   // Smooth Whole-Page Scroll-Driven Theme Switcher:
   // 1. Hero (#hero)                     -> Light (#fafafa)

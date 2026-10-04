@@ -1,20 +1,46 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Github, Linkedin, ArrowUpRight, Send, Check } from 'lucide-react';
+import { Mail, Github, Linkedin, ArrowUpRight, Send, Check, Loader2 } from 'lucide-react';
 import { portfolioData } from '../data/portfolioData';
+import { saveContactMessage } from '../services/neonDb';
+import { notifyContactSubmission } from '../services/notificationService';
+import { analytics } from '../services/analyticsTracker';
 
 export const Contact: React.FC = () => {
   const { profile } = portfolioData;
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!formData.name || !formData.email || !formData.message) return;
+
+    setIsSubmitting(true);
+    const geo = analytics.getGeoLocation();
+    const msgId = 'msg_' + Math.random().toString(36).substring(2, 9) + '_' + Date.now().toString(36);
+
+    const payload = {
+      id: msgId,
+      name: formData.name,
+      email: formData.email,
+      message: formData.message,
+      country: geo.country,
+      city: geo.city,
+    };
+
+    // 1. Save directly into Neon PostgreSQL
+    await saveContactMessage(payload);
+
+    // 2. Dispatch real-time push notification (Telegram / Discord)
+    await notifyContactSubmission(payload);
+
+    setIsSubmitting(false);
     setFormSubmitted(true);
     setTimeout(() => {
       setFormSubmitted(false);
       setFormData({ name: '', email: '', message: '' });
-    }, 4000);
+    }, 5000);
   };
 
   return (
@@ -157,10 +183,20 @@ export const Contact: React.FC = () => {
 
                   <button
                     type="submit"
-                    className="w-full py-3.5 rounded-full bg-[#f0f0f0] hover:bg-white text-[#111111] font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-md mt-2"
+                    disabled={isSubmitting}
+                    className="w-full py-3.5 rounded-full bg-[#f0f0f0] hover:bg-white disabled:opacity-50 text-[#111111] font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-md mt-2 cursor-pointer"
                   >
-                    <span>Send Message</span>
-                    <Send className="w-3.5 h-3.5" />
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                        <span>Sending...</span>
+                      </>
+                    ) : (
+                      <>
+                        <span>Send Message</span>
+                        <Send className="w-3.5 h-3.5" />
+                      </>
+                    )}
                   </button>
                 </form>
               )}
