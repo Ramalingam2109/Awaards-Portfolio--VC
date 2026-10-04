@@ -1,17 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, ChevronUp } from 'lucide-react';
-import { portfolioData, PeriodicSkill } from '../data/portfolioData';
+import { PeriodicSkill, portfolioData } from '../data/portfolioData';
+import { fetchDynamicSkills } from '../services/neonDb';
 
 export const PeriodicSkills: React.FC = () => {
-  const { periodicSkills } = portfolioData;
+  const [skills, setSkills] = useState<PeriodicSkill[]>(portfolioData.periodicSkills);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [showAll, setShowAll] = useState<boolean>(false);
   const [selectedFamily, setSelectedFamily] = useState<string>('All');
   
-  // Default active skill (React)
-  const [activeSkill, setActiveSkill] = useState<PeriodicSkill>(
-    periodicSkills.find((s) => s.symbol === 'Re') || periodicSkills[0]
-  );
+  // Default active skill
+  const [activeSkill, setActiveSkill] = useState<PeriodicSkill>(() => {
+    return skills.find((s) => s.symbol === 'Re') || skills[0];
+  });
+
+  // Dynamically load skills from Neon database on mount
+  useEffect(() => {
+    let isMounted = true;
+    fetchDynamicSkills().then((data) => {
+      if (isMounted && data && data.length > 0) {
+        setSkills(data);
+        setActiveSkill(data.find((s) => s.symbol === 'Re') || data[0]);
+        setIsLoading(false);
+      }
+    });
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const families = [
     'All',
@@ -24,13 +41,13 @@ export const PeriodicSkills: React.FC = () => {
   ];
 
   // Primary first row: highly important core skills
-  const primarySkills = periodicSkills.filter((s) => s.featured);
+  const primarySkills = skills.filter((s) => s.featured);
 
   // If expanded, allow filtering across all skills; otherwise show primary first row
   const visibleSkills = showAll
     ? (selectedFamily === 'All'
-        ? periodicSkills
-        : periodicSkills.filter((s) => s.family === selectedFamily))
+        ? skills
+        : skills.filter((s) => s.family === selectedFamily))
     : primarySkills;
 
   // Family color accents
@@ -167,7 +184,7 @@ export const PeriodicSkills: React.FC = () => {
                 }}
                 className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-white hover:bg-[#111111] text-[#333333] hover:text-white border border-[#d8d8d4] hover:border-[#111111] text-xs font-semibold tracking-wide transition-all duration-300 shadow-sm group"
               >
-                <span>{showAll ? 'View less' : `View all skills (${periodicSkills.length})`}</span>
+                <span>{showAll ? 'View less' : `View all skills (${skills.length})`}</span>
                 {showAll ? (
                   <ChevronUp className="w-3.5 h-3.5 opacity-70 group-hover:opacity-100 transition-opacity" />
                 ) : (

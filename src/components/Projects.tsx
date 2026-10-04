@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { motion, useSpring, useMotionValue } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
-import { Project } from '../data/portfolioData';
-import { getStoredProjects } from '../services/dataStorage';
+import { Project, portfolioData } from '../data/portfolioData';
+import { fetchDynamicProjects } from '../services/neonDb';
 
 interface Props {
   onSelectProject: (p: Project) => void;
 }
 
 export const Projects: React.FC<Props> = ({ onSelectProject }) => {
-  const [projects, setProjects] = useState<Project[]>(getStoredProjects());
+  const [projects, setProjects] = useState<Project[]>(portfolioData.projects);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [hoveredProject, setHoveredProject] = useState<Project | null>(null);
 
   const mouseX = useMotionValue(0);
@@ -17,13 +18,18 @@ export const Projects: React.FC<Props> = ({ onSelectProject }) => {
   const smoothX = useSpring(mouseX, { stiffness: 220, damping: 20 });
   const smoothY = useSpring(mouseY, { stiffness: 220, damping: 20 });
 
-  // Listen for database updates
+  // Dynamically load projects from Neon database on mount
   useEffect(() => {
-    const handleUpdate = () => {
-      setProjects(getStoredProjects());
+    let isMounted = true;
+    fetchDynamicProjects().then((data) => {
+      if (isMounted && data && data.length > 0) {
+        setProjects(data);
+        setIsLoading(false);
+      }
+    });
+    return () => {
+      isMounted = false;
     };
-    window.addEventListener('portfolio_projects_updated', handleUpdate);
-    return () => window.removeEventListener('portfolio_projects_updated', handleUpdate);
   }, []);
 
   const handleMouseMove = (e: React.MouseEvent) => {
@@ -121,7 +127,7 @@ export const Projects: React.FC<Props> = ({ onSelectProject }) => {
           transition={{ duration: 0.2 }}
         >
           <img
-            src={hoveredProject.image}
+            src={projectImageFallback(hoveredProject.image)}
             alt={hoveredProject.title}
             className="w-full h-full object-cover"
           />
@@ -135,4 +141,8 @@ export const Projects: React.FC<Props> = ({ onSelectProject }) => {
       )}
     </section>
   );
+};
+
+const projectImageFallback = (img?: string) => {
+  return img || 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80';
 };
