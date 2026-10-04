@@ -4,32 +4,49 @@
 
 @layer base {
   :root {
-    --theme-bg: #0c0c0e;
-    --theme-text: #f3efe6;
-    --theme-text-muted: #888892;
-    --theme-card: #141418;
-    --theme-border: rgba(255, 255, 255, 0.09);
-    --theme-nav-bg: rgba(14, 14, 17, 0.75);
-    --theme-pill-hover: rgba(255, 255, 255, 0.1);
+    --theme-bg: #fafafa;
+    --theme-text: #111111;
+    --theme-text-muted: #8a8a7c;
   }
 
-  [data-theme="light"] {
-    --theme-bg: #f3efe6;
-    --theme-text: #121215;
-    --theme-text-muted: #666670;
-    --theme-card: #e8e3d8;
-    --theme-border: rgba(0, 0, 0, 0.1);
-    --theme-nav-bg: rgba(243, 239, 230, 0.85);
-    --theme-pill-hover: rgba(0, 0, 0, 0.06);
+  [data-theme="dark"] {
+    --theme-bg: #0e0e0e;
+    --theme-text: #f0f0f0;
+    --theme-text-muted: #8a8a7c;
+  }
+
+  html {
+    scroll-behavior: smooth;
   }
 
   body {
     background-color: var(--theme-bg);
     color: var(--theme-text);
-    transition: background-color 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-                color 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-                border-color 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-    font-family: 'Plus Jakarta Sans', sans-serif;
+    transition: background-color 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                color 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Outlined text stroke effect like Huy Ng hero */
+.text-stroke {
+  -webkit-text-stroke: 1.5px #111111;
+  color: transparent;
+}
+
+[data-theme="dark"] .text-stroke {
+  -webkit-text-stroke: 1.5px #f0f0f0;
+  color: transparent;
+}
+
+@media (min-width: 768px) {
+  .text-stroke {
+    -webkit-text-stroke: 2px #111111;
+  }
+  [data-theme="dark"] .text-stroke {
+    -webkit-text-stroke: 2px #f0f0f0;
   }
 }
 
@@ -41,35 +58,19 @@
   width: 100vw;
   height: 100vh;
   pointer-events: none;
-  opacity: 0.032;
+  opacity: 0.03;
   z-index: 99;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-}
-
-/* Smooth Dynamic Theme Containers */
-.theme-container {
-  background-color: var(--theme-bg);
-  color: var(--theme-text);
-  transition: background-color 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-              color 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-              border-color 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.theme-card {
-  background-color: var(--theme-card);
-  border-color: var(--theme-border);
-  transition: background-color 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-              border-color 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='1' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 5px;
+  width: 4px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--theme-bg);
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #3f3f46;
+  background: #8a8a7c;
   border-radius: 9999px;
 }

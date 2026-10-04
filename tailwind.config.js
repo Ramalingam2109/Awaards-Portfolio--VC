@@ -8,26 +8,17 @@ export default {
     extend: {
       colors: {
         canvas: {
-          dark: '#0c0c0e',
-          light: '#f3efe6',
+          light: '#fafafa',
+          dark: '#0e0e0e',
         },
-        card: {
-          dark: '#141418',
-          light: '#e7e2d7',
-        },
-        border: {
-          dark: 'rgba(255, 255, 255, 0.09)',
-          light: 'rgba(0, 0, 0, 0.09)',
-        },
-        accent: {
-          chartreuse: '#c8e972',
-          amber: '#f59e0b',
+        muted: {
+          olive: '#8a8a7c',
+          stone: '#666660',
         }
       },
       fontFamily: {
         sans: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', 'sans-serif'],
-        display: ['"Space Grotesk"', '"Syne"', 'sans-serif'],
-        editorial: ['"Instrument Serif"', 'Georgia', 'serif'],
+        display: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
         mono: ['"JetBrains Mono"', 'monospace']
       },
       animation: {

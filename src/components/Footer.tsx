@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowUp } from 'lucide-react';
-import { soundFX } from '../utils/audio';
 
 export const Footer: React.FC = () => {
   const [time, setTime] = useState<string>('');
@@ -23,28 +22,32 @@ export const Footer: React.FC = () => {
   }, []);
 
   const scrollToTop = () => {
-    soundFX.playClick();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
-    <footer className="py-12 px-4 sm:px-8 border-t border-white/10 bg-[#0c0c0e] text-[#f3efe6]/50 text-xs font-mono">
+    <footer className="py-10 px-6 sm:px-12 lg:px-16 border-t border-white/5 bg-[#0e0e0e] text-[#8a8a7c] text-xs">
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-        <div className="flex items-center gap-3">
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-          <span>Chennai, India • {time ? time + ' IST' : 'Local Time'}</span>
+        
+        {/* Brand */}
+        <div className="flex items-center gap-2">
+          <span className="text-sm font-bold font-display text-[#f0f0f0]">ram</span>
+          <span className="text-xs align-super text-[#f0f0f0] opacity-70">"</span>
+          <span className="text-xs text-[#8a8a7c] ml-2">© 2026. All rights reserved.</span>
         </div>
 
-        <div>
-          <span>© 2026 RAM — Designed & Engineered for Excellence</span>
+        {/* Local Time */}
+        <div className="flex items-center gap-2.5 font-mono text-[11px]">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+          <span>Chennai, India ({time ? time + ' IST' : 'IST'})</span>
         </div>
 
+        {/* Back to Top */}
         <button
           onClick={scrollToTop}
-          onMouseEnter={() => soundFX.playHover()}
-          className="flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-white/5 hover:bg-white/10 text-white border border-white/10 transition-all group"
+          className="flex items-center gap-2 px-4 py-2 rounded-full hover:bg-white/5 text-[#f0f0f0] transition-colors group"
         >
-          <span>Back to Top</span>
+          <span className="text-xs">Back to top</span>
           <ArrowUp className="w-3.5 h-3.5 group-hover:-translate-y-0.5 transition-transform" />
         </button>
 
