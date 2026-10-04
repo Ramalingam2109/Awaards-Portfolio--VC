@@ -4,27 +4,27 @@ import { motion } from 'framer-motion';
 export const Services: React.FC = () => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
-  // Pure Web Development and Software Development focus
+  // Core software and web development disciplines
   const expertises = [
     {
       title: 'Full-Stack Web Development',
-      desc: 'Building responsive, end-to-end web applications using React, Next.js, Node.js, and modern architectural standards.'
+      desc: 'Building responsive, end-to-end web applications with React, Next.js, and Node.js, utilizing clean component design and modern development workflows.'
     },
     {
       title: 'Frontend Engineering',
-      desc: 'Developing fast, accessible, and responsive user interfaces with TypeScript, modern CSS, and component state management.'
+      desc: 'Crafting responsive, accessible, and fast web interfaces using modern TypeScript, Tailwind CSS, and structured state management.'
     },
     {
-      title: 'Backend & REST APIs',
-      desc: 'Designing structured RESTful API endpoints, server middleware, request validation, and database integrations with Node.js and Express.'
+      title: 'Backend & RESTful APIs',
+      desc: 'Designing modular REST APIs, server middleware, request validation, and backend microservices using Node.js, Express, and Python.'
     },
     {
-      title: 'Database Management',
-      desc: 'Writing structured queries, modeling relational schemas in PostgreSQL and MySQL, and managing document stores in MongoDB.'
+      title: 'Database Architecture',
+      desc: 'Modeling normalized relational database schemas in PostgreSQL and MySQL, and building document stores with MongoDB and Prisma ORM.'
     },
     {
-      title: 'Data Structures & Algorithms',
-      desc: 'Solving algorithmic problems, optimizing time and space complexity, and applying object-oriented software engineering principles.'
+      title: 'Software Engineering Foundations',
+      desc: 'Applying core data structures, algorithms, object-oriented design principles, and proven design patterns to solve technical challenges.'
     },
   ];
 
@@ -35,7 +35,7 @@ export const Services: React.FC = () => {
     >
       <div className="max-w-4xl mx-auto">
         
-        {/* Section 1: my expertises. */}
+        {/* Section Header */}
         <div>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
@@ -54,13 +54,13 @@ export const Services: React.FC = () => {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-base sm:text-lg text-[#555555] leading-relaxed max-w-2xl"
           >
-            I focus on software engineering and full-stack web development. I love building responsive web apps, creating clean REST APIs, and learning modern technologies.
+            I focus on software engineering and full-stack web development, delivering reliable applications with clean code, robust architectures, and intuitive user experiences.
           </motion.p>
 
-          {/* Thin divider line from Screenshot 3 */}
+          {/* Thin divider line from reference */}
           <div className="w-full border-t border-[#d8d8d8] my-8" />
 
-          {/* Stacked list of core developer expertises */}
+          {/* Stacked list of core developer expertises with smooth hover feedback */}
           <div className="space-y-1 sm:space-y-2">
             {expertises.map((item, idx) => (
               <motion.div

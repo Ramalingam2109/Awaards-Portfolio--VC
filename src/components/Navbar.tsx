@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 
@@ -13,6 +13,7 @@ export const Navbar: React.FC<Props> = ({ currentTheme }) => {
   const navLinks = [
     { label: 'about', href: '#about' },
     { label: 'services', href: '#services' },
+    { label: 'skills', href: '#skills' },
     { label: 'projects', href: '#works' },
   ];
 
@@ -30,7 +31,7 @@ export const Navbar: React.FC<Props> = ({ currentTheme }) => {
           <span className="text-xs align-super ml-0.5 font-normal opacity-70">"</span>
         </a>
 
-        {/* Right Navigation & CTA matching Screenshot 1 & 2 */}
+        {/* Right Navigation & CTA matching Huy Ng reference */}
         <div className="pointer-events-auto flex items-center gap-6 sm:gap-8">
           <div className="hidden md:flex items-center gap-7 text-xs font-medium tracking-wide">
             {navLinks.map((link) => (
@@ -94,6 +95,7 @@ export const Navbar: React.FC<Props> = ({ currentTheme }) => {
               {link.label}
             </a>
           ))}
+
           <a
             href="#contact"
             onClick={() => setMobileMenuOpen(false)}

@@ -13,9 +13,9 @@ export const Statement: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="text-3xl sm:text-5xl md:text-6xl font-semibold tracking-tight text-[#f0f0f0] leading-[1.15]"
+          className="text-3xl sm:text-5xl md:text-6xl font-semibold tracking-tight text-[#f0f0f0] leading-[1.18]"
         >
-          I build modern web applications and software systems with a commitment to clean code, strong fundamentals, and continuous learning.
+          I engineer modern web applications and scalable software systems with an emphasis on clean architecture, performance, and intuitive user experiences.
         </motion.p>
 
         {/* Status indicator row */}
@@ -28,9 +28,9 @@ export const Statement: React.FC = () => {
         >
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span>Fresher • Actively Seeking Junior Developer Roles</span>
+            <span>Software Development & Web Engineering</span>
           </div>
-          <span>Chennai, India (IST)</span>
+          <span>Based in Chennai, India</span>
         </motion.div>
       </div>
     </section>

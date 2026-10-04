@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { Project, portfolioData } from './data/portfolioData';
+import { Project } from './data/portfolioData';
 import { SmoothScroll } from './components/SmoothScroll';
 import { CustomCursor } from './components/CustomCursor';
 import { Navbar } from './components/Navbar';
@@ -87,22 +87,22 @@ export const App: React.FC = () => {
         <Navbar currentTheme={currentTheme} />
 
         <main>
-          {/* 1. Hero: Screenshot 1 (Light - HEY, I'M RAM, fits in single viewport layout) */}
+          {/* 1. Hero (Light - HEY, I'M RAM, fits in single viewport layout) */}
           <Hero />
 
-          {/* 2. Statement: Screenshot 2 (Dark - I build modern web applications...) */}
+          {/* 2. Statement (Dark - I engineer modern web applications...) */}
           <Statement />
 
-          {/* 3. Services: Screenshot 3 (Light - my expertises. focused on Web & Software Dev) */}
+          {/* 3. Services (Light - my expertises. focused on Web & Software Dev) */}
           <Services />
 
-          {/* 4. Periodic Table of Tech Elements (Screenshot 1: interactive matrix in 6 families) */}
+          {/* 4. Technical Skills (Interactive matrix with compact View all / View less button) */}
           <PeriodicSkills />
 
-          {/* 5. Selected Works (Light - Interactive Awwwards list with hover preview) */}
+          {/* 5. Selected Works (Interactive Awwwards list with hover preview) */}
           <Projects onSelectProject={(p) => setSelectedProject(p)} />
 
-          {/* 6. Contact (Dark - let's talk. & email link with mailto) */}
+          {/* 6. Contact (Dark - let's talk. & direct channel links) */}
           <Contact />
         </main>
 
