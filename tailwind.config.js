@@ -4,44 +4,39 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
-  darkMode: 'class',
   theme: {
     extend: {
       colors: {
-        dark: {
-          bg: '#0a0a0c',
-          card: '#121216',
-          border: '#202026',
-          muted: '#80808e',
-          text: '#ededf2'
+        canvas: {
+          dark: '#0c0c0e',
+          light: '#f3efe6',
+        },
+        card: {
+          dark: '#141418',
+          light: '#e7e2d7',
+        },
+        border: {
+          dark: 'rgba(255, 255, 255, 0.09)',
+          light: 'rgba(0, 0, 0, 0.09)',
         },
         accent: {
-          lime: '#d9f99d',
-          yellow: '#fde047',
-          cyan: '#38bdf8',
-          purple: '#c084fc',
-          emerald: '#34d399'
+          chartreuse: '#c8e972',
+          amber: '#f59e0b',
         }
       },
       fontFamily: {
-        sans: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', '-apple-system', 'sans-serif'],
-        display: ['"Cabinet Grotesk"', '"Syne"', 'Inter', 'sans-serif'],
+        sans: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', 'sans-serif'],
+        display: ['"Space Grotesk"', '"Syne"', 'sans-serif'],
+        editorial: ['"Instrument Serif"', 'Georgia', 'serif'],
         mono: ['"JetBrains Mono"', 'monospace']
       },
       animation: {
-        'spin-slow': 'spin 12s linear infinite',
-        'pulse-subtle': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-        'float': 'float 6s ease-in-out infinite',
-        'gradient': 'gradient 8s ease infinite',
+        'marquee': 'marquee 28s linear infinite',
       },
       keyframes: {
-        float: {
-          '0%, 100%': { transform: 'translateY(0)' },
-          '50%': { transform: 'translateY(-10px)' },
-        },
-        gradient: {
-          '0%, 100%': { backgroundPosition: '0% 50%' },
-          '50%': { backgroundPosition: '100% 50%' },
+        marquee: {
+          '0%': { transform: 'translateX(0%)' },
+          '100%': { transform: 'translateX(-50%)' },
         }
       }
     },

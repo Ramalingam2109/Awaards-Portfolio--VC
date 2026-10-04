@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { PortfolioData, Project } from './types';
-import { defaultPortfolioData } from './data/defaultData';
-import { ExcelService } from './services/excelService';
+import { Project, portfolioData } from './data/portfolioData';
 import { SmoothScroll } from './components/SmoothScroll';
 import { CustomCursor } from './components/CustomCursor';
 import { Navbar } from './components/Navbar';
@@ -14,115 +12,88 @@ import { Skills } from './components/Skills';
 import { ExperienceSection } from './components/Experience';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
-import { ExcelManagerModal } from './components/ExcelManagerModal';
-
-const STORAGE_KEY = 'ramalingam_portfolio_data_v1';
 
 export const App: React.FC = () => {
-  const [data, setData] = useState<PortfolioData>(defaultPortfolioData);
-  const [isExcelModalOpen, setIsExcelModalOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const [isCustomData, setIsCustomData] = useState(false);
+  const [currentTheme, setCurrentTheme] = useState<'dark' | 'light'>('dark');
 
+  // Dynamic Scroll Theme Switcher
   useEffect(() => {
-    const initData = async () => {
-      try {
-        const cached = localStorage.getItem(STORAGE_KEY);
-        if (cached) {
-          const parsed = JSON.parse(cached);
-          setData(parsed);
-          setIsCustomData(true);
-          return;
-        }
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const windowHeight = window.innerHeight;
 
-        const excelData = await ExcelService.loadDefaultExcelFile();
-        if (excelData) {
-          setData(excelData);
+      // Check positions of sections
+      const aboutEl = document.getElementById('about');
+      const experienceEl = document.getElementById('experience');
+
+      if (aboutEl && experienceEl) {
+        const aboutTop = aboutEl.offsetTop - windowHeight * 0.35;
+        const expTop = experienceEl.offsetTop - windowHeight * 0.35;
+
+        if (scrollY >= aboutTop && scrollY < expTop) {
+          if (currentTheme !== 'light') {
+            setCurrentTheme('light');
+            document.documentElement.setAttribute('data-theme', 'light');
+          }
+        } else {
+          if (currentTheme !== 'dark') {
+            setCurrentTheme('dark');
+            document.documentElement.setAttribute('data-theme', 'dark');
+          }
         }
-      } catch (err) {
-        console.warn('Error loading initial excel data:', err);
       }
     };
 
-    initData();
-  }, []);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
 
-  const handleUpdateData = (newData: PortfolioData) => {
-    setData(newData);
-    setIsCustomData(true);
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(newData));
-    } catch (e) {
-      console.warn('Could not save to localStorage:', e);
-    }
-  };
-
-  const handleResetData = () => {
-    setData(defaultPortfolioData);
-    setIsCustomData(false);
-    localStorage.removeItem(STORAGE_KEY);
-  };
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [currentTheme]);
 
   return (
     <SmoothScroll>
-      <div className="relative min-h-screen bg-[#08080a] text-[#f4f4f7] selection:bg-lime-300 selection:text-black font-sans antialiased overflow-x-hidden">
+      <div className="relative min-h-screen selection:bg-[#c8e972] selection:text-black font-sans antialiased overflow-x-hidden">
+        {/* Subtle Noise Texture Overlay */}
         <div className="noise-overlay" />
+
+        {/* Physics-based Cursor Follower */}
         <CustomCursor />
-        <Navbar
-          onOpenExcelManager={() => setIsExcelModalOpen(true)}
-          isCustomData={isCustomData}
-        />
+
+        {/* Floating Dynamic Navbar */}
+        <Navbar currentTheme={currentTheme} />
 
         <main>
-          <Hero
-            profile={data.profile}
-            onOpenExcelManager={() => setIsExcelModalOpen(true)}
-          />
+          {/* Hero: Dark Onyx Theme */}
+          <Hero />
 
+          {/* Kinetic Marquee Ribbon */}
           <Marquee />
 
-          <About
-            profile={data.profile}
-            stats={data.stats}
-          />
+          {/* About / Philosophy: Warm Paper Light Theme */}
+          <About />
 
-          <Projects
-            projects={data.projects}
-            onSelectProject={(p) => setSelectedProject(p)}
-          />
+          {/* Selected Works: Warm Paper Light Theme */}
+          <Projects onSelectProject={(p) => setSelectedProject(p)} />
 
-          <Skills
-            skills={data.skills}
-            onOpenExcelManager={() => setIsExcelModalOpen(true)}
-          />
+          {/* Technical Stack: Warm Paper Light Theme */}
+          <Skills />
 
-          <ExperienceSection
-            experiences={data.experiences}
-          />
+          {/* Experience Timeline: Deep Obsidian Dark Theme */}
+          <ExperienceSection />
 
-          <Contact
-            profile={data.profile}
-          />
+          {/* Contact Suite: Deep Obsidian Dark Theme */}
+          <Contact />
         </main>
 
-        <Footer
-          onOpenExcelManager={() => setIsExcelModalOpen(true)}
-        />
+        {/* Footer with Live Chennai IST Clock */}
+        <Footer />
 
+        {/* Project Inspection Modal */}
         <ProjectModal
           project={selectedProject}
           onClose={() => setSelectedProject(null)}
         />
-
-        <ExcelManagerModal
-          isOpen={isExcelModalOpen}
-          onClose={() => setIsExcelModalOpen(false)}
-          data={data}
-          onUpdateData={handleUpdateData}
-          onResetData={handleResetData}
-          isCustomData={isCustomData}
-        />
-
       </div>
     </SmoothScroll>
   );
